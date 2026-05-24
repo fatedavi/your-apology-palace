@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { RunawayButton } from "./RunawayButton";
 import { TypingText } from "./TypingText";
+import { HeartIcon, HeartOutlineIcon } from "./icons";
 
 export function SceneQuestion({
   name,
@@ -13,7 +14,6 @@ export function SceneQuestion({
   const [subtitleReady, setSubtitleReady] = useState(false);
   const [easter, setEaster] = useState<{ id: number; x: number; y: number }[]>([]);
 
-  // easter egg: type "love"
   useEffect(() => {
     let buf = "";
     const onKey = (e: KeyboardEvent) => {
@@ -38,19 +38,14 @@ export function SceneQuestion({
       key="question"
       initial={{ opacity: 0, scale: 0.95, filter: "blur(14px)" }}
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-      exit={{
-        opacity: 0,
-        scale: 1.25,
-        y: 120,
-        filter: "blur(30px)",
-      }}
+      exit={{ opacity: 0, scale: 1.25, y: 120, filter: "blur(30px)" }}
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 text-center"
     >
       <div className="max-w-2xl">
         <h2 className="font-display text-3xl font-semibold text-foreground sm:text-5xl">
           <span className="text-gradient">{name}</span>
-          <TypingText text={`, kamu mau maafin aku ga? 🥺`} speed={55} onDone={() => setSubtitleReady(true)} />
+          <TypingText text={`, kamu mau maafin aku ga?`} speed={55} onDone={() => setSubtitleReady(true)} />
         </h2>
         {subtitleReady && (
           <motion.p
@@ -59,12 +54,11 @@ export function SceneQuestion({
             transition={{ duration: 0.6 }}
             className="mt-5 text-base text-muted-foreground sm:text-lg"
           >
-            Aku janji ga ngulangin lagi… mungkin 😔
+            Aku janji ga ngulangin lagi… mungkin
           </motion.p>
         )}
       </div>
 
-      {/* Buttons area */}
       <div className="relative mt-12 h-64 w-full max-w-2xl sm:h-72">
         <motion.button
           type="button"
@@ -73,9 +67,9 @@ export function SceneQuestion({
           whileTap={{ scale: 0.96 }}
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ scale: { duration: 1.8, repeat: Infinity, ease: "easeInOut" } }}
-          className="glow-btn absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl px-10 py-4 font-display text-xl font-semibold"
+          className="glow-btn absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-2xl px-10 py-4 font-display text-xl font-semibold"
         >
-          Iya 🤍
+          Iya <HeartIcon size={22} className="text-white" />
         </motion.button>
 
         <RunawayButton />
@@ -87,16 +81,16 @@ export function SceneQuestion({
             animate={{ opacity: 1, scale: 1.3, y: -120 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.8, ease: "easeOut" }}
-            className="pointer-events-none absolute text-3xl"
+            className="pointer-events-none absolute text-primary"
             style={{ left: `${h.x}%`, top: `${h.y}%` }}
           >
-            🤍
+            <HeartOutlineIcon size={28} />
           </motion.div>
         ))}
       </div>
 
       <p className="mt-8 text-xs text-muted-foreground/70">
-        psst… coba ketik <span className="font-semibold">"love"</span> ✨
+        psst… coba ketik <span className="font-semibold">"love"</span>
       </p>
     </motion.div>
   );

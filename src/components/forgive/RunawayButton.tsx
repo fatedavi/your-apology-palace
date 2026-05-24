@@ -1,14 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  FaceAngryIcon,
+  FaceCryingIcon,
+  FaceMonkeyIcon,
+  FacePleadingIcon,
+  FaceSadIcon,
+  FaceDevilIcon,
+} from "./icons";
 
-const TAUNTS = [
-  "Tidak 😈",
-  "Yakin nih? 😭",
-  "Jangan dong 😔",
-  "Kasian aku 🥺",
-  "Plisss 😭",
-  "Cobain lagi 🙈",
-  "Aku nangis nih 😭",
-  "Ga boleh 😤",
+const TAUNTS: { text: string; icon: ReactNode }[] = [
+  { text: "Tidak", icon: <FaceDevilIcon size={20} /> },
+  { text: "Yakin nih?", icon: <FaceCryingIcon size={20} /> },
+  { text: "Jangan dong", icon: <FaceSadIcon size={20} /> },
+  { text: "Kasian aku", icon: <FacePleadingIcon size={20} /> },
+  { text: "Plisss", icon: <FaceCryingIcon size={20} /> },
+  { text: "Cobain lagi", icon: <FaceMonkeyIcon size={20} /> },
+  { text: "Aku nangis nih", icon: <FaceCryingIcon size={20} /> },
+  { text: "Ga boleh", icon: <FaceAngryIcon size={20} /> },
 ];
 
 function playBoop() {
@@ -35,7 +43,7 @@ export function RunawayButton() {
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [dodges, setDodges] = useState(0);
-  const [label, setLabel] = useState(TAUNTS[0]);
+  const [labelIdx, setLabelIdx] = useState(0);
   const lastDodge = useRef(0);
 
   const dodge = () => {
@@ -54,7 +62,7 @@ export function RunawayButton() {
     const ny = margin + Math.random() * Math.max(0, maxY - margin);
     setPos({ x: nx - (rect.left - parent.left), y: ny - (rect.top - parent.top) });
     setDodges((d) => d + 1);
-    setLabel(TAUNTS[Math.floor(Math.random() * (TAUNTS.length - 1)) + 1]);
+    setLabelIdx(Math.floor(Math.random() * (TAUNTS.length - 1)) + 1);
     playBoop();
   };
 
@@ -86,6 +94,7 @@ export function RunawayButton() {
 
   const scale = Math.max(0.55, 1 - dodges * 0.04);
   const rot = ((dodges * 17) % 30) - 15;
+  const current = TAUNTS[labelIdx];
 
   return (
     <button
@@ -93,14 +102,15 @@ export function RunawayButton() {
       type="button"
       onPointerDown={dodge}
       onClick={dodge}
-      className="absolute rounded-2xl border border-white/60 bg-white/70 px-6 py-3 font-display text-lg font-semibold text-foreground shadow-md backdrop-blur-md"
+      className="absolute inline-flex items-center gap-2 rounded-2xl border border-white/60 bg-white/70 px-6 py-3 font-display text-lg font-semibold text-foreground shadow-md backdrop-blur-md"
       style={{
         transform: `translate3d(${pos.x}px, ${pos.y}px, 0) scale(${scale}) rotate(${rot}deg)`,
         transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
         willChange: "transform",
       }}
     >
-      {label}
+      {current.text}
+      {current.icon}
     </button>
   );
 }

@@ -1,6 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import confetti from "canvas-confetti";
+import { HeartIcon, HeartOutlineIcon, SparkleIcon, GiftIcon } from "./icons";
+
+const BURST = [HeartIcon, HeartOutlineIcon, SparkleIcon, HeartIcon];
 
 export function GiftBox({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
@@ -26,67 +29,32 @@ export function GiftBox({ name }: { name: string }) {
         whileTap={{ scale: 0.95 }}
         animate={open ? {} : { y: [0, -8, 0] }}
         transition={{ y: { duration: 1.4, repeat: Infinity, ease: "easeInOut" } }}
-        className="relative"
+        className="relative text-primary"
         aria-label="Buka kado"
       >
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          {/* box body */}
-          <motion.rect
-            x="15"
-            y="50"
-            width="90"
-            height="60"
-            rx="6"
-            fill="oklch(0.82 0.14 350)"
-            stroke="white"
-            strokeWidth="2"
-          />
-          {/* vertical ribbon body */}
-          <rect x="55" y="50" width="10" height="60" fill="oklch(0.95 0.05 50)" />
-          {/* lid */}
-          <motion.g
-            initial={false}
-            animate={open ? { y: -40, rotate: -12 } : { y: 0, rotate: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            style={{ transformOrigin: "60px 50px" }}
-          >
-            <rect
-              x="10"
-              y="38"
-              width="100"
-              height="18"
-              rx="4"
-              fill="oklch(0.78 0.15 340)"
-              stroke="white"
-              strokeWidth="2"
-            />
-            <rect x="55" y="38" width="10" height="18" fill="oklch(0.95 0.05 50)" />
-            {/* bow */}
-            <circle cx="50" cy="34" r="10" fill="oklch(0.95 0.05 50)" />
-            <circle cx="70" cy="34" r="10" fill="oklch(0.95 0.05 50)" />
-            <circle cx="60" cy="36" r="5" fill="oklch(0.82 0.14 350)" />
-          </motion.g>
-        </svg>
+        <GiftIcon size={120} className="drop-shadow-[0_10px_30px_rgba(255,120,170,0.45)]" />
 
-        {/* flying hearts */}
         <AnimatePresence>
           {open &&
-            Array.from({ length: 8 }).map((_, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 0, x: 0, scale: 0.6 }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  y: -120 - Math.random() * 60,
-                  x: (i - 4) * 18 + (Math.random() - 0.5) * 20,
-                  scale: 1.2,
-                }}
-                transition={{ duration: 1.8 + Math.random() * 0.6, ease: "easeOut" }}
-                className="pointer-events-none absolute left-1/2 top-12 text-2xl"
-              >
-                {["🤍", "💕", "💖", "✨"][i % 4]}
-              </motion.span>
-            ))}
+            Array.from({ length: 8 }).map((_, i) => {
+              const Icon = BURST[i % BURST.length];
+              return (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 0, x: 0, scale: 0.6 }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    y: -120 - Math.random() * 60,
+                    x: (i - 4) * 18 + (Math.random() - 0.5) * 20,
+                    scale: 1.2,
+                  }}
+                  transition={{ duration: 1.8 + Math.random() * 0.6, ease: "easeOut" }}
+                  className="pointer-events-none absolute left-1/2 top-6 text-primary"
+                >
+                  <Icon size={24} />
+                </motion.span>
+              );
+            })}
         </AnimatePresence>
       </motion.button>
 
@@ -103,15 +71,17 @@ export function GiftBox({ name }: { name: string }) {
             </p>
             <p className="mt-2 font-display text-lg leading-relaxed text-foreground">
               Makasih udah jadi orang paling sabar di hidupku. Aku sayang kamu,
-              hari ini dan besoknya juga 🤍
+              hari ini dan besoknya juga.
             </p>
-            <p className="mt-3 text-right text-sm text-muted-foreground">— aku 🥹</p>
+            <p className="mt-3 flex items-center justify-end gap-1 text-sm text-muted-foreground">
+              — aku <HeartIcon size={14} className="text-primary" />
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
 
       {!open && (
-        <p className="mt-3 text-sm text-muted-foreground">klik kadonya ya 🎁</p>
+        <p className="mt-3 text-sm text-muted-foreground">klik kadonya ya</p>
       )}
     </div>
   );
