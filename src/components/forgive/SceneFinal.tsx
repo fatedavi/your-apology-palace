@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import { TypingText } from "./TypingText";
 import { GiftBox } from "./GiftBox";
+import { BowIcon, FaceHappyTearIcon, FlowerIcon, HeartIcon, HeartOutlineIcon, SparkleIcon, TeddyIcon } from "./icons";
+
+const FLOATERS = [HeartIcon, HeartOutlineIcon, SparkleIcon, FlowerIcon, TeddyIcon, BowIcon];
 
 export function SceneFinal({ name }: { name: string }) {
   const [line2, setLine2] = useState(false);
 
   useEffect(() => {
     document.body.classList.add("warm-bg");
-    // burst confetti on enter
     const fire = (origin: { x: number; y: number }) =>
       confetti({
         particleCount: 80,
@@ -38,14 +40,14 @@ export function SceneFinal({ name }: { name: string }) {
       <motion.div
         animate={{ rotate: [0, 5, -5, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="mb-4 text-6xl"
+        className="mb-4"
       >
-        🥹
+        <FaceHappyTearIcon size={72} />
       </motion.div>
 
       <h1 className="font-display text-3xl font-semibold sm:text-5xl">
         <TypingText
-          text={`Makasih udah mau maafin aku, ${name} 🤍`}
+          text={`Makasih udah mau maafin aku, ${name}`}
           speed={55}
           onDone={() => setLine2(true)}
         />
@@ -58,31 +60,34 @@ export function SceneFinal({ name }: { name: string }) {
           transition={{ duration: 0.7 }}
           className="mt-5 font-display text-xl text-foreground/80 sm:text-2xl"
         >
-          Kamu emang paling baik sedunia 🥹
+          Kamu emang paling baik sedunia
         </motion.p>
       )}
 
       <GiftBox name={name} />
 
-      {/* floating bouquet of emojis */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <motion.span
-            key={i}
-            initial={{ y: "100vh", opacity: 0 }}
-            animate={{ y: "-20vh", opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: 8 + Math.random() * 6,
-              delay: Math.random() * 4,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute text-2xl"
-            style={{ left: `${Math.random() * 100}%` }}
-          >
-            {["🤍", "💕", "✨", "🌸", "🧸", "🎀"][i % 6]}
-          </motion.span>
-        ))}
+        {Array.from({ length: 14 }).map((_, i) => {
+          const Icon = FLOATERS[i % FLOATERS.length];
+          const hues = ["text-primary", "text-accent", "text-rose-soft", "text-peach"];
+          return (
+            <motion.span
+              key={i}
+              initial={{ y: "100vh", opacity: 0, rotate: 0 }}
+              animate={{ y: "-20vh", opacity: [0, 1, 1, 0], rotate: 360 }}
+              transition={{
+                duration: 8 + Math.random() * 6,
+                delay: Math.random() * 4,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className={`absolute ${hues[i % hues.length]}`}
+              style={{ left: `${Math.random() * 100}%` }}
+            >
+              <Icon size={22 + Math.floor(Math.random() * 10)} />
+            </motion.span>
+          );
+        })}
       </div>
     </motion.div>
   );

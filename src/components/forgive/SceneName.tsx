@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { HeartIcon, SparkleIcon } from "./icons";
 
 export function SceneName({ onSubmit }: { onSubmit: (name: string) => void }) {
   const [name, setName] = useState("");
@@ -28,15 +29,15 @@ export function SceneName({ onSubmit }: { onSubmit: (name: string) => void }) {
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mb-2 text-5xl"
+          className="mb-3 flex justify-center text-primary"
         >
-          🤍
+          <HeartIcon size={56} className="drop-shadow-[0_6px_20px_rgba(255,120,170,0.5)]" />
         </motion.div>
         <h1 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
           Masukin nama kamu dulu ya
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Biar aku bisa minta maaf langsung ke kamu 🥺
+          Biar aku bisa minta maaf langsung ke kamu
         </p>
 
         <input
@@ -52,9 +53,9 @@ export function SceneName({ onSubmit }: { onSubmit: (name: string) => void }) {
         <button
           type="submit"
           disabled={!name.trim()}
-          className="glow-btn mt-5 w-full rounded-2xl px-6 py-3 font-display text-lg font-semibold disabled:opacity-50"
+          className="glow-btn mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3 font-display text-lg font-semibold disabled:opacity-50"
         >
-          Lanjut ✨
+          Lanjut <SparkleIcon size={18} />
         </button>
       </form>
     </motion.div>
