@@ -73,12 +73,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Forgive Me 🤍 — Maafin aku ya?" },
-      { name: "description", content: "Surat permintaan maaf interaktif yang lucu, manis, dan bikin gemes 🤍" },
+      { name: "description", content: "Surat permintaan maaf" },
       { name: "author", content: "Forgive Me" },
       { property: "og:title", content: "Forgive Me 🤍 — Maafin aku ya?" },
-      { property: "og:description", content: "Buka, ketik nama kamu, dan biarin aku minta maaf dengan cara yang paling lucu." },
+      { property: "og:description", content: "Surat permintaan maaf" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Forgive Me 🤍 — Maafin aku ya?" },
+      { name: "twitter:description", content: "Surat permintaan maaf" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ea0212e3-adc2-4c2d-b67b-ce6a42df04e4/id-preview-9da44ccb--6e75e2d0-fccb-4106-a41d-ecf97098a535.lovable.app-1779622357188.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ea0212e3-adc2-4c2d-b67b-ce6a42df04e4/id-preview-9da44ccb--6e75e2d0-fccb-4106-a41d-ecf97098a535.lovable.app-1779622357188.png" },
     ],
     links: [
       {
