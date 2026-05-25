@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { CapooLove } from "./icons";
 
 export function LoadingScreen() {
   return (
@@ -14,14 +15,7 @@ export function LoadingScreen() {
         animate={{ scale: [1, 1.2, 1] }}
         transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
       >
-        <svg width="80" height="80" viewBox="0 0 32 32">
-          <path
-            d="M16 28s-11-7.5-11-15a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 7.5-11 15-11 15z"
-            fill="oklch(0.78 0.18 350)"
-            stroke="white"
-            strokeWidth="1"
-          />
-        </svg>
+        <CapooLove size={160} />
       </motion.div>
       <motion.p
         className="mt-6 font-display text-lg text-foreground/70"

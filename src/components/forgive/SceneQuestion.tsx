@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { RunawayButton } from "./RunawayButton";
 import { TypingText } from "./TypingText";
-import { HeartIcon, HeartOutlineIcon } from "./icons";
+import { CapooFlower, CapooLove, HeartIcon, HeartOutlineIcon } from "./icons";
 
 export function SceneQuestion({
   name,
@@ -42,8 +42,17 @@ export function SceneQuestion({
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 text-center"
     >
-      <div className="max-w-2xl">
-        <h2 className="font-display text-3xl font-semibold text-foreground sm:text-5xl">
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mb-6"
+      >
+        <CapooFlower size={140} />
+      </motion.div>
+
+      <div className="w-full max-w-2xl px-2 sm:px-0">
+        <h2 className="font-display text-2xl font-semibold text-foreground sm:text-5xl">
           <span className="text-gradient">{name}</span>
           <TypingText text={`, kamu mau maafin aku ga?`} speed={55} onDone={() => setSubtitleReady(true)} />
         </h2>
@@ -52,14 +61,14 @@ export function SceneQuestion({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mt-5 text-base text-muted-foreground sm:text-lg"
+            className="mt-4 text-sm text-muted-foreground sm:mt-5 sm:text-lg"
           >
             Aku janji ga ngulangin lagi… mungkin
           </motion.p>
         )}
       </div>
 
-      <div className="relative mt-12 h-64 w-full max-w-2xl sm:h-72">
+      <div className="relative mt-10 h-56 w-full max-w-2xl sm:mt-12 sm:h-72">
         <motion.button
           type="button"
           onClick={onYes}
@@ -67,9 +76,9 @@ export function SceneQuestion({
           whileTap={{ scale: 0.96 }}
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ scale: { duration: 1.8, repeat: Infinity, ease: "easeInOut" } }}
-          className="glow-btn absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-2xl px-10 py-4 font-display text-xl font-semibold"
+          className="glow-btn absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-2xl px-8 py-3.5 font-display text-lg font-semibold sm:px-10 sm:py-4 sm:text-xl"
         >
-          Iya <HeartIcon size={22} className="text-white" />
+          Iya <CapooLove size={32} />
         </motion.button>
 
         <RunawayButton />
@@ -84,12 +93,12 @@ export function SceneQuestion({
             className="pointer-events-none absolute text-primary"
             style={{ left: `${h.x}%`, top: `${h.y}%` }}
           >
-            <HeartOutlineIcon size={28} />
+            <CapooLove size={40} />
           </motion.div>
         ))}
       </div>
 
-      <p className="mt-8 text-xs text-muted-foreground/70">
+      <p className="mt-6 text-xs text-muted-foreground/70 sm:mt-8">
         psst… coba ketik <span className="font-semibold">"love"</span>
       </p>
     </motion.div>

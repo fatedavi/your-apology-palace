@@ -19,7 +19,7 @@ export function ForgiveMeApp() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <main className="relative min-h-dvh min-h-screen overflow-hidden">
       <BackgroundFX intensity={scene === "final" ? 1.6 : 1} />
       <HeartCursor />
 

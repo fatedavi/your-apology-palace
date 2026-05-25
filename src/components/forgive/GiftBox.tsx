@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import confetti from "canvas-confetti";
-import { HeartIcon, HeartOutlineIcon, SparkleIcon, GiftIcon } from "./icons";
+import { HeartIcon, SparkleIcon, GiftIcon, CapooLove, CapooFlower, CapooHappy } from "./icons";
 
-const BURST = [HeartIcon, HeartOutlineIcon, SparkleIcon, HeartIcon];
+const BURST = [CapooLove, CapooFlower, CapooHappy, HeartIcon, SparkleIcon];
 
 export function GiftBox({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ export function GiftBox({ name }: { name: string }) {
   };
 
   return (
-    <div className="relative mx-auto mt-10 flex flex-col items-center">
+    <div className="relative mx-auto mt-8 flex flex-col items-center sm:mt-10">
       <motion.button
         type="button"
         onClick={handleOpen}
@@ -32,7 +32,7 @@ export function GiftBox({ name }: { name: string }) {
         className="relative text-primary"
         aria-label="Buka kado"
       >
-        <GiftIcon size={120} className="drop-shadow-[0_10px_30px_rgba(255,120,170,0.45)]" />
+        <GiftIcon size={100} className="drop-shadow-[0_10px_30px_rgba(255,120,170,0.45)] sm:size-[120]" />
 
         <AnimatePresence>
           {open &&
@@ -64,24 +64,24 @@ export function GiftBox({ name }: { name: string }) {
             initial={{ opacity: 0, y: 20, scale: 0.9, rotate: -3 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotate: -2 }}
             transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="glass mt-8 max-w-sm rounded-2xl p-6 text-left"
+            className="glass mx-4 mt-8 max-w-sm rounded-2xl p-6 text-left sm:mx-0"
           >
             <p className="font-display text-sm uppercase tracking-wider text-primary">
               Surat kecil untuk {name}
             </p>
-            <p className="mt-2 font-display text-lg leading-relaxed text-foreground">
+            <p className="mt-2 font-display text-base leading-relaxed text-foreground sm:text-lg">
               Makasih udah jadi orang paling sabar di hidupku. Aku sayang kamu,
               hari ini dan besoknya juga.
             </p>
             <p className="mt-3 flex items-center justify-end gap-1 text-sm text-muted-foreground">
-              — aku <HeartIcon size={14} className="text-primary" />
+              — aku <CapooLove size={24} />
             </p>
           </motion.div>
         )}
       </AnimatePresence>
 
       {!open && (
-        <p className="mt-3 text-sm text-muted-foreground">klik kadonya ya</p>
+        <p className="mt-2 text-sm text-muted-foreground sm:mt-3">klik kadonya ya</p>
       )}
     </div>
   );

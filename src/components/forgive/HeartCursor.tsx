@@ -40,7 +40,7 @@ export function HeartCursor() {
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden sm:block"
       style={{ willChange: "transform" }}
     >
       <div className="h-6 w-6 animate-pulse">

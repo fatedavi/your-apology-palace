@@ -45,7 +45,6 @@
 :root {
   --radius: 1rem;
 
-  /* Romantic pastel palette */
   --background: oklch(0.985 0.012 350);
   --foreground: oklch(0.32 0.06 350);
 
@@ -112,6 +111,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body.warm-bg {
@@ -119,10 +119,13 @@
     transition: background 1.2s ease;
   }
 
-  h1,
-  h2,
-  h3 {
+  h1, h2, h3 {
     font-family: var(--font-display);
+  }
+
+  input {
+    -webkit-appearance: none;
+    appearance: none;
   }
 }
 
@@ -146,6 +149,9 @@
     filter: brightness(1.08);
     box-shadow: 0 14px 50px -10px oklch(0.78 0.2 340 / 0.7),
       0 0 80px oklch(0.85 0.18 320 / 0.5);
+  }
+  .glow-btn:active {
+    transform: translateY(0) scale(0.97);
   }
 
   .heart-cursor,

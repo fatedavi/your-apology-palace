@@ -1,14 +1,31 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 import { TypingText } from "./TypingText";
 import { GiftBox } from "./GiftBox";
-import { BowIcon, FaceHappyTearIcon, FlowerIcon, HeartIcon, HeartOutlineIcon, SparkleIcon, TeddyIcon } from "./icons";
+import { CapooHappy, CapooLove, CapooFlower, HeartIcon, SparkleIcon } from "./icons";
 
-const FLOATERS = [HeartIcon, HeartOutlineIcon, SparkleIcon, FlowerIcon, TeddyIcon, BowIcon];
+const FLOATERS = [CapooLove, CapooFlower, CapooHappy, HeartIcon, SparkleIcon];
+const HUES = ["text-primary", "text-accent", "text-rose-soft", "text-peach"];
+
+function useFloaterConfig(count: number) {
+  const config = useRef<{ left: number; delay: number; duration: number; size: number; iconIdx: number; hueIdx: number }[] | null>(null);
+  if (!config.current) {
+    config.current = Array.from({ length: count }).map(() => ({
+      left: Math.random() * 100,
+      delay: Math.random() * 4,
+      duration: 8 + Math.random() * 6,
+      size: 30 + Math.floor(Math.random() * 20),
+      iconIdx: Math.floor(Math.random() * FLOATERS.length),
+      hueIdx: Math.floor(Math.random() * HUES.length),
+    }));
+  }
+  return config.current;
+}
 
 export function SceneFinal({ name }: { name: string }) {
   const [line2, setLine2] = useState(false);
+  const floaters = useFloaterConfig(18);
 
   useEffect(() => {
     document.body.classList.add("warm-bg");
@@ -42,10 +59,10 @@ export function SceneFinal({ name }: { name: string }) {
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         className="mb-4"
       >
-        <FaceHappyTearIcon size={72} />
+        <CapooHappy size={160} />
       </motion.div>
 
-      <h1 className="font-display text-3xl font-semibold sm:text-5xl">
+      <h1 className="w-full max-w-xl font-display text-2xl font-semibold sm:text-5xl">
         <TypingText
           text={`Makasih udah mau maafin aku, ${name}`}
           speed={55}
@@ -58,7 +75,7 @@ export function SceneFinal({ name }: { name: string }) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="mt-5 font-display text-xl text-foreground/80 sm:text-2xl"
+          className="mt-4 font-display text-lg text-foreground/80 sm:mt-5 sm:text-2xl"
         >
           Kamu emang paling baik sedunia
         </motion.p>
@@ -67,24 +84,23 @@ export function SceneFinal({ name }: { name: string }) {
       <GiftBox name={name} />
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {Array.from({ length: 14 }).map((_, i) => {
-          const Icon = FLOATERS[i % FLOATERS.length];
-          const hues = ["text-primary", "text-accent", "text-rose-soft", "text-peach"];
+        {floaters.map((f, i) => {
+          const Icon = FLOATERS[f.iconIdx];
           return (
             <motion.span
               key={i}
               initial={{ y: "100vh", opacity: 0, rotate: 0 }}
               animate={{ y: "-20vh", opacity: [0, 1, 1, 0], rotate: 360 }}
               transition={{
-                duration: 8 + Math.random() * 6,
-                delay: Math.random() * 4,
+                duration: f.duration,
+                delay: f.delay,
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className={`absolute ${hues[i % hues.length]}`}
-              style={{ left: `${Math.random() * 100}%` }}
+              className={`absolute ${HUES[f.hueIdx]}`}
+              style={{ left: `${f.left}%` }}
             >
-              <Icon size={22 + Math.floor(Math.random() * 10)} />
+              <Icon size={f.size} />
             </motion.span>
           );
         })}

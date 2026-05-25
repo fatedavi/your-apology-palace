@@ -2,13 +2,90 @@ import type { SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
 
-const base = (size?: number) => ({
-  width: size ?? 24,
-  height: size ?? 24,
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg",
-});
+export function CapooFlower({ size = 100, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img 
+      src="/img/capoo-flower.gif" 
+      alt="Capoo Flower" 
+      width={size} 
+      height={size} 
+      className={`inline-block ${className}`}
+    />
+  );
+}
+
+export function CapooLove({ size = 100, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img 
+      src="/img/capoo-love.gif" 
+      alt="Capoo Love" 
+      width={size} 
+      height={size} 
+      className={`inline-block ${className}`}
+    />
+  );
+}
+
+// Using the new JPG for the Happy state as requested
+export function CapooHappy({ size = 100, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img 
+      src="/img/capoo-new.jpg" 
+      alt="Capoo Happy" 
+      width={size} 
+      height={size} 
+      className={`inline-block object-contain ${className}`}
+    />
+  );
+}
+
+// Fallback to local GIFs for other states to ensure they appear
+export function CapooCrying({ size = 100, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img 
+      src="/img/capoo-love.gif" 
+      alt="Capoo Crying" 
+      width={size} 
+      height={size} 
+      className={`inline-block ${className}`}
+    />
+  );
+}
+
+export function CapooAngry({ size = 100, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img 
+      src="/img/capoo-flower.gif" 
+      alt="Capoo Angry" 
+      width={size} 
+      height={size} 
+      className={`inline-block ${className}`}
+    />
+  );
+}
+
+export function CapooMonkey({ size = 100, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img 
+      src="/img/capoo-flower.gif" 
+      alt="Capoo Monkey" 
+      width={size} 
+      height={size} 
+      className={`inline-block ${className}`}
+    />
+  );
+}
+
+
+function base(size?: number) {
+  return {
+    width: size ?? 24,
+    height: size ?? 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+  };
+}
 
 export function HeartIcon({ size, ...props }: IconProps) {
   return (
@@ -68,10 +145,7 @@ export function FlowerIcon({ size, ...props }: IconProps) {
 export function BowIcon({ size, ...props }: IconProps) {
   return (
     <svg {...base(size)} {...props}>
-      <path
-        d="M12 12L4 7v10l8-5zm0 0l8-5v10l-8-5z"
-        fill="currentColor"
-      />
+      <path d="M12 12L4 7v10l8-5zm0 0l8-5v10l-8-5z" fill="currentColor" />
       <circle cx="12" cy="12" r="2" fill="white" />
     </svg>
   );
@@ -92,9 +166,7 @@ export function TeddyIcon({ size, ...props }: IconProps) {
   );
 }
 
-/* Faces */
 export function FacePleadingIcon({ size, ...props }: IconProps) {
-  // big watery puppy eyes
   return (
     <svg {...base(size)} {...props}>
       <circle cx="12" cy="12" r="10" fill="#ffd6a3" stroke="#d49a5e" strokeWidth="1" />
@@ -107,7 +179,6 @@ export function FacePleadingIcon({ size, ...props }: IconProps) {
         <circle cx="16.2" cy="11" r="0.4" fill="white" />
       </g>
       <path d="M9.5 16c1 0.8 4 0.8 5 0" stroke="#3a2230" strokeWidth="0.9" strokeLinecap="round" fill="none" />
-      {/* tear */}
       <path d="M6.2 13.5q0.4 1.4 0 2.2q-0.6-0.8-0.2-2.2z" fill="#7ec8f5" />
     </svg>
   );

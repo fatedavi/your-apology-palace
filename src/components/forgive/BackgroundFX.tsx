@@ -13,6 +13,10 @@ interface Particle {
   alpha: number;
 }
 
+function isMobile() {
+  return window.innerWidth < 640;
+}
+
 export function BackgroundFX({ intensity = 1 }: { intensity?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -22,7 +26,8 @@ export function BackgroundFX({ intensity = 1 }: { intensity?: number }) {
     const ctx = canvas.getContext("2d")!;
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const mobile = isMobile();
+    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 2);
     const resize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -35,17 +40,19 @@ export function BackgroundFX({ intensity = 1 }: { intensity?: number }) {
     resize();
     window.addEventListener("resize", resize);
 
-    const count = Math.floor(28 * intensity);
+    const particleCount = mobile ? 12 : 28;
+    const count = Math.floor(particleCount * intensity);
     const particles: Particle[] = Array.from({ length: count }).map(() => spawn(w, h));
 
     function spawn(w: number, h: number): Particle {
       const isHeart = Math.random() < 0.55;
+      const sizeMult = mobile ? 0.65 : 1;
       return {
         x: Math.random() * w,
         y: h + Math.random() * h * 0.5,
         vy: -(0.3 + Math.random() * 0.8),
         vx: (Math.random() - 0.5) * 0.4,
-        size: isHeart ? 10 + Math.random() * 16 : 2 + Math.random() * 3,
+        size: isHeart ? (10 + Math.random() * 16) * sizeMult : (2 + Math.random() * 3) * sizeMult,
         rot: Math.random() * Math.PI,
         vr: (Math.random() - 0.5) * 0.02,
         type: isHeart ? "heart" : "spark",
@@ -114,11 +121,10 @@ export function BackgroundFX({ intensity = 1 }: { intensity?: number }) {
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0"
       />
-      {/* soft glow blobs */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-rose-soft opacity-50 blur-3xl" />
-        <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-lavender opacity-40 blur-3xl" />
-        <div className="absolute -bottom-40 left-1/4 h-96 w-96 rounded-full bg-peach opacity-40 blur-3xl" />
+        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-rose-soft opacity-50 blur-3xl max-sm:h-48 max-sm:w-48 max-sm:-top-16 max-sm:-left-16" />
+        <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-lavender opacity-40 blur-3xl max-sm:h-48 max-sm:w-48 max-sm:-right-16" />
+        <div className="absolute -bottom-40 left-1/4 h-96 w-96 rounded-full bg-peach opacity-40 blur-3xl max-sm:h-48 max-sm:w-48 max-sm:-bottom-20" />
       </div>
     </>
   );
